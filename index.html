@@ -19,7 +19,7 @@
     .msg{margin-top:14px;padding:11px 13px;border-radius:10px;font-size:13px;line-height:1.5}.msg.err{background:rgba(248,81,73,.12);border:1px solid rgba(248,81,73,.34);color:#ffb4ae}.msg.ok{background:rgba(63,185,80,.12);border:1px solid rgba(63,185,80,.34);color:#9be6b0}
     .grant{margin-top:16px;padding:13px 14px;border-radius:11px;background:rgba(63,185,80,.09);border:1px solid rgba(63,185,80,.28)}.grant .t{font-size:12px;color:#8b98ad;margin-bottom:5px}.grant .v{font-size:15px;font-weight:640;color:#9be6b0}
     .spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite;vertical-align:-2px;margin-right:7px}@keyframes sp{to{transform:rotate(360deg)}}
-    .hint{font-size:11.5px;color:#66738a;margin-top:6px;line-height:1.45}.terms{font-size:11px;color:#66738a;line-height:1.45;margin:16px 0 0}
+    .hint{font-size:11.5px;color:#68758b;margin-top:7px;line-height:1.45}.details{display:grid;gap:11px;margin:20px 0}.detail{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:13px 14px;border:1px solid rgba(255,255,255,.11);background:rgba(255,255,255,.025);border-radius:12px}.detail .k{font-size:12px;color:#93a0b5}.detail .v{font-size:14px;font-weight:620;text-align:right;overflow-wrap:anywhere}.status{display:inline-flex;align-items:center;gap:7px;color:#9be6b0}.dot{width:8px;height:8px;border-radius:50%;background:#3fb950;box-shadow:0 0 12px rgba(63,185,80,.8)}.keybox{display:flex;align-items:center;gap:9px;padding:12px 13px;background:#0d1220;border:1px solid rgba(255,255,255,.13);border-radius:11px}.keybox code{flex:1;min-width:0;font:600 13px/1.4 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:#cfe2ff;overflow-wrap:anywhere}.copy{width:auto;flex:none;margin:0;padding:8px 10px;font-size:12px;background:#1b2434;border:1px solid rgba(255,255,255,.12)}.models{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px}.model{padding:10px 11px;border:1px solid rgba(255,255,255,.11);border-radius:10px;color:#cbd6e6;font-size:12px;background:rgba(255,255,255,.025)}.model::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:#3d94ff;margin:0 7px 1px 0}.backlink{display:inline-block;margin-top:15px;color:#8ebdff;font-size:12px;text-decoration:none;cursor:pointer}.backlink:hover{text-decoration:underline}@media(max-width:430px){.models{grid-template-columns:1fr}.detail{align-items:flex-start;flex-direction:column;gap:5px}.detail .v{text-align:left}}
   </style>
 </head>
 <body>
@@ -30,35 +30,41 @@
     <label for="code">Промокод</label><input id="code" type="text" inputmode="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="VIBE-XXXX-XXXX-XXXX" maxlength="32">
     <button id="activate" type="button">Активировать</button><div id="promoMsg" class="msg hidden" role="status" aria-live="polite"></div>
   </section>
-  <section id="registerStep" class="hidden">
-    <div class="grant"><div class="t">Промокод подтверждён. Будет начислено:</div><div id="grantVal" class="v">—</div></div>
-    <h1 style="margin-top:22px">Создание аккаунта</h1><p class="sub">Введите email и пароль. После регистрации вы сразу попадёте в кабинет VibeCoder.</p>
-    <form id="registerForm" action="https://riskradarai.ru/api/github/register" method="post">
-      <input type="hidden" name="email" id="emailHidden"><input type="hidden" name="code" id="codeHidden"><input type="hidden" name="fp" id="fpHidden"><input type="hidden" name="ph" id="phHidden"><input type="hidden" name="kind" value="vibecoder">
-      <div class="row"><label for="email">Логин (email)</label><input id="email" type="email" autocomplete="username" inputmode="email" placeholder="you@example.com" required></div>
-      <div class="row"><label for="pass">Пароль</label><input id="pass" type="password" autocomplete="new-password" placeholder="Минимум 8 символов" minlength="8" required><div class="hint">Пароль хешируется SHA-256 в браузере. Открытый пароль не отправляется.</div></div>
-      <div class="row"><label for="pass2">Повторите пароль</label><input id="pass2" type="password" autocomplete="new-password" placeholder="Ещё раз" minlength="8" required></div>
-      <button id="register" type="submit">Регистрация</button><button id="back" class="secondary" type="button">Назад</button>
-    </form>
-    <div id="regMsg" class="msg hidden" role="status" aria-live="polite"></div><p class="terms">Нажимая «Регистрация», вы создаёте аккаунт RiskRadar VibeCoder.</p>
+  <section id="accessStep" class="hidden" aria-live="polite">
+    <div class="grant"><div class="t">Промокод активирован. Доступ предоставлен:</div><div class="v">2 000 000 токенов</div></div>
+    <h1>Данные подключения</h1><p class="sub">Параметры подключения доступны в этом интерфейсе.</p>
+    <div class="details">
+      <div class="detail"><span class="k">Статус</span><span class="v status"><i class="dot" aria-hidden="true"></i>Активирован</span></div>
+      <div class="detail"><span class="k">API Host</span><span class="v">https://riskradarai.ru</span></div>
+      <div class="detail"><span class="k">Баланс</span><span class="v">2 000 000 токенов</span></div>
+      <div class="detail"><span class="k">Промокод</span><span id="activatedCode" class="v">—</span></div>
+    </div>
+    <label for="apiKey">Ключ</label>
+    <div class="keybox"><code id="apiKey">rr_fun_xxxxxxxxxxxxxxxxxxxxx</code><button id="copyKey" class="copy" type="button">Копировать</button></div>
+    <div id="copyMsg" class="msg hidden" role="status" aria-live="polite"></div>
+    <button id="newKey" type="button">Создать новый API-ключ</button>
+    <label style="margin-top:22px">Доступные модели</label>
+    <div class="models"><div class="model">gpt-6-astra</div><div class="model">gpt-5.6-luna</div><div class="model">sonnet-5</div><div class="model">codex-auto-review</div><div class="model">opus-4.6</div><div class="model">sonnet-4.6</div></div>
+    <p class="hint">Параметры отображаются локально в этом файле. Внешние запросы и передача введённых данных не выполняются.</p>
+    <a id="back" class="backlink">← Вернуться к вводу промокода</a>
   </section>
 </main>
 <script>
 (function(){'use strict';
-  const API='https://riskradarai.ru/api/github/check';
   const $=id=>document.getElementById(id);
-  const code=$('code'), activate=$('activate'), promoMsg=$('promoMsg'), promoStep=$('promoStep'), registerStep=$('registerStep'), form=$('registerForm'), regBtn=$('register'), regMsg=$('regMsg');
-  let promo=''; let busy=false;
+  const code=$('code'),promoMsg=$('promoMsg'),promoStep=$('promoStep'),accessStep=$('accessStep'),activatedCode=$('activatedCode'),apiKey=$('apiKey'),copyKey=$('copyKey'),copyMsg=$('copyMsg'),newKey=$('newKey');
   function message(el,text,kind){el.textContent=text;el.className='msg '+(kind||'err')}
   function hide(el){el.textContent='';el.className='msg hidden'}
-  function loading(btn,on,label){btn.disabled=on;if(on){btn.dataset.label=btn.innerHTML;btn.innerHTML='<span class="spin"></span>'+label}else if(btn.dataset.label){btn.innerHTML=btn.dataset.label}}
-  function fp(){try{let v=localStorage.getItem('rr_devid');if(!v){v=(crypto.randomUUID?crypto.randomUUID():('d'+Math.random().toString(36).slice(2)+Date.now().toString(36))).replace(/-/g,'').slice(0,32);localStorage.setItem('rr_devid',v)}return v}catch(e){return ''}}
-  async function sha256(value){if(!crypto.subtle)throw new Error('Web Crypto недоступен');const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(value));return Array.from(new Uint8Array(b),x=>x.toString(16).padStart(2,'0')).join('')}
-  function tokens(n){return (Number(n)||0).toLocaleString('ru-RU')+' токенов'}
-  function minutes(n){n=Number(n)||0;if(n>=1440)return 'безлимит на '+Math.round(n/1440*10)/10+' дн.';if(n>=60)return 'безлимит на '+Math.round(n/60*10)/10+' ч.';return 'безлимит на '+n+' мин.'}
-  async function check(){if(busy)return;hide(promoMsg);const value=code.value.trim().toUpperCase();if(!/^[A-Z0-9_-]{4,32}$/.test(value)){message(promoMsg,'Введите корректный промокод.', 'err');return}busy=true;loading(activate,true,'Проверяем…');try{const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code:value})});const d=await r.json().catch(()=>({}));if(r.status!==200||!d.ok){message(promoMsg,d.error||(r.status===429?'Слишком много попыток.':'Промокод не найден или уже использован.'),'err');return}promo=value;$('grantVal').textContent=d.unlimited?minutes(d.minutes):tokens(d.tokens);$('codeHidden').value=promo;promoStep.className='hidden';registerStep.className='';$('email').focus()}catch(e){message(promoMsg,'Нет связи с сервером. Попробуйте ещё раз.','err')}finally{busy=false;loading(activate,false)}}
-  form.addEventListener('submit',async function(e){e.preventDefault();hide(regMsg);if(busy)return;const email=$('email').value.trim().toLowerCase(),pass=$('pass').value,pass2=$('pass2').value;if(!/^[^\s@]{1,64}@[^\s@]{1,190}\.[^\s@]{2,24}$/.test(email)){message(regMsg,'Введите корректный email.','err');return}if(pass.length<8){message(regMsg,'Пароль — минимум 8 символов.','err');return}if(pass!==pass2){message(regMsg,'Пароли не совпадают.','err');return}if(!promo){message(regMsg,'Сначала активируйте промокод.','err');return}try{busy=true;loading(regBtn,true,'Создаём аккаунт…');$('emailHidden').value=email;$('fpHidden').value=fp();$('phHidden').value=await sha256(pass);form.submit()}catch(err){message(regMsg,err.message||'Не удалось подготовить регистрацию.','err');busy=false;loading(regBtn,false)}});
-  activate.addEventListener('click',check);code.addEventListener('keydown',e=>{if(e.key==='Enter')check()});$('back').addEventListener('click',()=>{registerStep.className='hidden';promoStep.className='';hide(regMsg);promo='';code.focus()});
+  function randomPart(){try{if(window.crypto&&crypto.getRandomValues){const bytes=new Uint8Array(18);crypto.getRandomValues(bytes);return Array.from(bytes,b=>b.toString(36).padStart(2,'0')).join('').slice(0,24)}}catch(e){}return Math.random().toString(36).slice(2)+Date.now().toString(36)}
+  function makeKey(){return 'rr_fun_'+randomPart()}
+  function activateCode(){
+    hide(promoMsg);const value=code.value.trim().toUpperCase();
+    if(!/^[A-Z0-9_-]{4,32}$/.test(value)){message(promoMsg,'Введите промокод длиной от 4 до 32 символов.','err');return}
+    activatedCode.textContent=value;apiKey.textContent=makeKey();promoStep.className='hidden';accessStep.className='';
+  }
+  async function copyCurrentKey(){hide(copyMsg);try{await navigator.clipboard.writeText(apiKey.textContent);message(copyMsg,'Ключ скопирован.','ok')}catch(e){message(copyMsg,'Скопируйте ключ вручную.','err')}}
+  $('activate').addEventListener('click',activateCode);code.addEventListener('keydown',e=>{if(e.key==='Enter')activateCode()});newKey.addEventListener('click',()=>{apiKey.textContent=makeKey();message(copyMsg,'Создан новый ключ.','ok')});copyKey.addEventListener('click',copyCurrentKey);
+  $('back').addEventListener('click',()=>{accessStep.className='hidden';promoStep.className='';hide(copyMsg);code.value='';code.focus()});
   try{const q=new URLSearchParams(location.search).get('code');if(q)code.value=q.toUpperCase().slice(0,32)}catch(e){}
 })();
 </script>
