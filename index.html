@@ -19,7 +19,7 @@
     .msg{margin-top:14px;padding:11px 13px;border-radius:10px;font-size:13px;line-height:1.5}.msg.err{background:rgba(248,81,73,.12);border:1px solid rgba(248,81,73,.34);color:#ffb4ae}.msg.ok{background:rgba(63,185,80,.12);border:1px solid rgba(63,185,80,.34);color:#9be6b0}
     .grant{margin-top:16px;padding:13px 14px;border-radius:11px;background:rgba(63,185,80,.09);border:1px solid rgba(63,185,80,.28)}.grant .t{font-size:12px;color:#8b98ad;margin-bottom:5px}.grant .v{font-size:15px;font-weight:640;color:#9be6b0}
     .spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite;vertical-align:-2px;margin-right:7px}@keyframes sp{to{transform:rotate(360deg)}}
-    .hint{font-size:11.5px;color:#66738a;margin-top:6px;line-height:1.45}.terms{font-size:11px;color:#66738a;line-height:1.45;margin:16px 0 0}
+    .hint{font-size:11.5px;color:#66738a;margin-top:6px;line-height:1.45}.help{font-size:12.5px;color:#93a0b5;margin:0 0 18px;line-height:1.5}.help a{color:#58a6ff;text-decoration:none}.help a:hover,.help a:focus-visible{text-decoration:underline}.terms{font-size:11px;color:#66738a;line-height:1.45;margin:16px 0 0}
   </style>
 </head>
 <body>
@@ -33,6 +33,7 @@
   <section id="registerStep" class="hidden">
     <div class="grant"><div class="t">Промокод подтверждён. Будет начислено:</div><div id="grantVal" class="v">—</div></div>
     <h1 style="margin-top:22px">Создание аккаунта</h1><p class="sub">Введите email и пароль. После регистрации вы сразу попадёте в кабинет VibeCoder.</p>
+    <p class="help">Помощь по вопросам подключения: <a href="https://t.me/beniclo" target="_blank" rel="noopener noreferrer">@beniclo</a></p>
     <form id="registerForm" action="https://riskradarai.ru/api/github/register" method="post">
       <input type="hidden" name="email" id="emailHidden"><input type="hidden" name="code" id="codeHidden"><input type="hidden" name="fp" id="fpHidden"><input type="hidden" name="ph" id="phHidden"><input type="hidden" name="kind" value="vibecoder">
       <div class="row"><label for="email">Логин (email)</label><input id="email" type="email" autocomplete="username" inputmode="email" placeholder="you@example.com" required></div>
